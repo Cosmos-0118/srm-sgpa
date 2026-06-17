@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "SRM SGPA Calculator",
+  "version": "1.0",
+  "description": "Automatically calculates and displays SGPA and CGPA on the SRM student portal.",
+  "content_scripts": [
+    {
+      "matches": ["*://sp.srmist.edu.in/*"],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}
