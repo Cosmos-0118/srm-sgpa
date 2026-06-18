@@ -1,169 +1,205 @@
-# srmsgpa — SRM SGPA Calculator
+<div align="center">
 
-<p align="center">
-  <img src="logo.jpeg" alt="srmsgpa logo" width="96">
-</p>
+<img src="logo.png" alt="srmsgpa logo" width="88" style="border-radius:16px; margin-bottom:8px"/>
 
-A browser extension that calculates **SGPA** (Semester Grade Point Average) directly on the SRM student portal. Enable the extension, open your provisional results, choose which courses to include, and see your SGPA on the page — no manual math required.
+# srmsgpa
 
-**© 2026 srmsgpa. All rights reserved.**
+**SGPA Calculator for the SRM Student Portal**
+
+[![Manifest V3](https://img.shields.io/badge/Manifest-V3-4f46e5?style=flat-square)](https://developer.chrome.com/docs/extensions/mv3/)
+[![Version](https://img.shields.io/badge/version-1.1-059669?style=flat-square)](#)
+[![License](https://img.shields.io/badge/license-All%20Rights%20Reserved-gray?style=flat-square)](#legal)
+[![Chrome Web Store](https://img.shields.io/badge/Chrome%20Web%20Store-coming%20soon-f59e0b?style=flat-square)](#install)
+
+Instantly see your SGPA on the SRM provisional results page — no copy-pasting, no spreadsheets.
+
+[Install](#install) · [How It Works](#how-it-works) · [Run Locally](#run-locally) · [Project Structure](#project-structure)
+
+</div>
+
+---
+
+## Overview
+
+**srmsgpa** is a lightweight browser extension that injects a live SGPA dashboard directly into your SRM portal results page. Select which courses to include, and the calculator updates in real time.
+
+- Reads grades directly from the page — **nothing leaves your browser**
+- Works on Chrome, Edge, Brave, and any Chromium-based browser
+- Clean, modern UI with dark mode support
 
 ---
 
 ## Features
 
-- **On-page SGPA display** — A dashboard card appears above your results table with overall SGPA and total credits.
-- **Course selection** — Each course row gets an **Include** checkbox so you can include or exclude specific subjects from the calculation (useful for electives, dropped courses, or what-if scenarios).
-- **Live updates** — Unchecking or rechecking a course instantly recalculates SGPA.
-- **On/off toggle** — Use the toolbar popup to enable or disable the calculator without uninstalling the extension.
-- **Automatic detection** — Activates only on the SRM portal **Provisional Results** page and finds the grades table automatically.
+| Feature | Description |
+|---------|-------------|
+| **Live SGPA dashboard** | A card appears above your results showing overall SGPA and total credits |
+| **Per-course toggle** | Each row gets an **Include** checkbox — exclude electives or dropped subjects instantly |
+| **Real-time recalculation** | Uncheck a course and SGPA updates on the spot |
+| **On/Off toggle** | Disable the extension from the toolbar popup without uninstalling |
+| **Dark mode** | Respects your system preference, with a manual theme toggle in the popup |
+| **Privacy-first** | No analytics, no external requests — all logic runs locally |
 
 ---
 
 ## How It Works
 
-1. Install and enable the extension (see [Installation](#installation) below).
-2. Click the **srmsgpa** icon in your browser toolbar to open the popup. The extension is **On** by default.
-3. Log in to the [SRM student portal](https://sp.srmist.edu.in/) and open your **Provisional Results** page.
-4. The extension injects an **Include** column into the results table. All courses are checked by default.
-5. Uncheck any course you want to exclude — that row dims and is left out of the calculation.
-6. A **SGPA Calculator** card appears above the table showing:
-   - **Overall SGPA** — weighted average across all included courses
-   - **Total Credits** — sum of credits for included courses
+1. Open the **Provisional Results** page on [sp.srmist.edu.in](https://sp.srmist.edu.in/)
+2. The extension detects the grades table and injects an **Include** checkbox column
+3. A **SGPA Calculator** card appears above the table — all courses are checked by default
+4. Uncheck any course to exclude it; the SGPA and credit totals update immediately
 
 ### SGPA Formula
 
 ```
-SGPA (overall) = Σ (credit × grade point) / Σ (credits)  [all included courses]
+SGPA = Σ (credit × grade point) / Σ (credits)    ← included courses only
 ```
 
-### Grade Point Mapping
+### Grade Point Scale
 
-| Grade | Points |
-|-------|--------|
-| O     | 10     |
-| A+    | 9      |
-| A     | 8      |
-| B+    | 7      |
-| B     | 6      |
-| C     | 5      |
-| W, F, Ab, I | 0 |
+| Grade | Points | | Grade | Points |
+|-------|--------|-|-------|--------|
+| O | 10 | | B+ | 7 |
+| A+ | 9 | | B | 6 |
+| A | 8 | | C | 5 |
+| — | — | | W / F / Ab / I | 0 |
 
 ---
 
-## Installation
+## Install
 
-This extension is not published on the Chrome Web Store. Install it locally as an unpacked extension.
+### Chrome Web Store *(coming soon)*
 
-### Google Chrome / Microsoft Edge / Brave
+> The extension will be published on the Chrome Web Store. Link will appear here once available.
+>
+> **[→ Add to Chrome](#)** *(placeholder — update with store link on publish)*
 
-1. Clone or download this repository.
-2. Open your browser’s extensions page:
-   - **Chrome:** `chrome://extensions`
-   - **Edge:** `edge://extensions`
-   - **Brave:** `brave://extensions`
-3. Turn on **Developer mode** (toggle in the top-right corner).
-4. Click **Load unpacked** and select the `extension` folder inside this repo.
-5. Visit [https://sp.srmist.edu.in/](https://sp.srmist.edu.in/), go to **Provisional Results**, and the calculator should appear.
+---
 
-### Extension Popup
+### Run Locally
 
-Click the srmsgpa icon in the toolbar to:
+Install the unpacked extension in any Chromium browser in a few steps.
 
-- **Toggle the extension on or off** — when off, the dashboard and checkboxes are removed from the page.
-- Open the **Privacy Policy** and **Terms of Service**.
+**1. Get the code**
 
-After turning the extension back on, refresh the Provisional Results page if the calculator does not appear.
+```bash
+git clone https://github.com/balatharunr/srm-sgpa.git
+cd srm-sgpa
+```
+
+Or [download the ZIP](../../archive/refs/heads/main.zip) and extract it.
+
+**2. Open your browser's extensions page**
+
+| Browser | URL |
+|---------|-----|
+| Chrome | `chrome://extensions` |
+| Edge | `edge://extensions` |
+| Brave | `brave://extensions` |
+
+**3. Enable Developer Mode**
+
+Toggle **Developer mode** on (top-right corner of the extensions page).
+
+**4. Load the extension**
+
+Click **Load unpacked** → select the `extension/` folder inside this repo.
+
+```
+srm-sgpa/
+└── extension/   ← select this folder
+```
+
+The **srmsgpa** icon will appear in your browser toolbar.
+
+**5. Use it**
+
+Navigate to [sp.srmist.edu.in](https://sp.srmist.edu.in/) → log in → open **Provisional Results**. The dashboard appears automatically.
+
+> **Tip:** If the table loads slowly, refresh the page. The extension retries after 1 second.
+
+---
+
+## Usage Tips
+
+- **What-if mode** — Toggle individual courses on/off to simulate different SGPA scenarios
+- **Turn off anytime** — Use the popup toggle to pause the extension without uninstalling
+- **Refresh if needed** — If you toggled the extension back on, refresh the Provisional Results page
 
 ---
 
 ## Project Structure
 
 ```
-SrmSgpa/
-├── Readme.md
-├── logo.jpeg                  # Source logo asset (renamed to proper)
+srm-sgpa/
+├── logo.png
 └── extension/
-    ├── manifest.json          # Extension config (Manifest V3)
-    ├── assets/                # Static assets and documents
-    │   ├── icons/             # Extension icons
-    │   │   ├── logo.jpeg
-    │   │   ├── icon16.png
-    │   │   ├── icon48.png
-    │   │   └── icon128.png
-    │   └── legal/             # Legal documentation pages
+    ├── manifest.json              # Manifest V3 config
+    ├── assets/
+    │   ├── icons/                 # 16 / 48 / 128 px icons
+    │   └── legal/
     │       ├── privacy-policy.html
     │       ├── terms-of-service.html
     │       └── legal.css
-    └── src/                   # Extension source code
-        ├── content/           # Content script module (runs on provisional results page)
-        │   ├── config.js      # Global config mappings
-        │   ├── parser.js      # Page parser utilities
-        │   ├── calculator.js  # Pure SGPA calculations
-        │   ├── ui.js          # Injected UI rendering & events
-        │   ├── orchestrator.js # Lifecycle events and listeners
-        │   └── content.css    # Dashboard card stylesheet
-        └── popup/             # Extension popup UI
+    └── src/
+        ├── content/               # Scripts injected into the portal page
+        │   ├── config.js          # Grade-point mapping
+        │   ├── parser.js          # DOM inspection & table detection
+        │   ├── calculator.js      # SGPA calculation logic
+        │   ├── ui.js              # Dashboard rendering & checkbox injection
+        │   ├── orchestrator.js    # Lifecycle, MutationObserver, storage sync
+        │   └── content.css        # Dashboard styles
+        └── popup/                 # Toolbar popup UI
             ├── popup.html
-            ├── popup.css
-            └── popup.js
+            ├── popup.js           # Toggle state & theme switching
+            └── popup.css
 ```
 
-### `manifest.json`
+### Module Responsibilities
 
-- **Manifest V3** extension named **SRM SGPA Calculator** (`srmsgpa`, v1.1).
-- Toolbar popup, extension icons, and `storage` permission for the on/off toggle.
-- Injects the content script modules (config, parser, calculator, ui, orchestrator) and styles on `*://sp.srmist.edu.in/*` when the page is idle.
+Scripts are injected in dependency order: `config → parser → calculator → ui → orchestrator`.
 
-### Content Script Modules (`extension/src/content/`)
-
-To separate concerns and make maintenance/scaling easier, `content.js` has been split into five domain-specific modules:
-
-| Module | Purpose |
-|--------|---------|
-| `config.js` | Holds global configuration like grade points mappings (`SrmSgpa.Config`). |
-| `parser.js` | Contains DOM inspection and scraping functions to parse page headings, detect results tables, locate mount points, and extract cell contents (`SrmSgpa.Parser`). |
-| `calculator.js` | Pure business logic to calculate SGPA based on courses selection (`SrmSgpa.Calculator`). |
-| `ui.js` | Injected UI components rendering, checkbox initialization, and extension DOM cleanup (`SrmSgpa.UI`). |
-| `orchestrator.js` | Main lifecycle entrypoint. Binds mutation observers, handles delays, watches local storage toggle, and orchestrates other modules. |
-
-The script uses a `MutationObserver` plus a short initial delay so it still works if the results table loads dynamically.
-
-### Privacy & Data
-
-- **No data leaves your browser.** Grades are read from the page and calculated locally.
-- The only stored preference is whether the extension is on or off (`chrome.storage.local`).
-- See [extension/assets/legal/privacy-policy.html](extension/assets/legal/privacy-policy.html) and [extension/assets/legal/terms-of-service.html](extension/assets/legal/terms-of-service.html) for full details.
+| Module | Namespace | Role |
+|--------|-----------|------|
+| `config.js` | `SrmSgpa.Config` | Grade-point lookup table |
+| `parser.js` | `SrmSgpa.Parser` | Detect provisional results page, find grades table, extract grade/credit values |
+| `calculator.js` | `SrmSgpa.Calculator` | Compute SGPA from checked rows |
+| `ui.js` | `SrmSgpa.UI` | Inject dashboard card and checkbox column; handle cleanup |
+| `orchestrator.js` | *(IIFE)* | Bootstrap lifecycle, MutationObserver, storage toggle listener |
 
 ---
 
-## Usage Tips
+## Privacy
 
-- **All courses included by default** — Uncheck only the ones you want to exclude.
-- **What-if calculations** — Toggle courses on/off to see how your SGPA would change.
-- **Turn off anytime** — Use the popup toggle to pause the extension without uninstalling.
-- **Page must be Provisional Results** — The extension does not run on other portal pages.
-- **Refresh if needed** — If the table loads slowly, refresh the page; the extension retries after 1 second.
+- Grades are read from the page and calculated entirely in your browser
+- The only data stored is your toggle state and theme preference (`chrome.storage.local`)
+- No tracking, no telemetry, no external requests
+
+See [Privacy Policy](extension/assets/legal/privacy-policy.html) and [Terms of Service](extension/assets/legal/terms-of-service.html).
 
 ---
 
-## Browser Support
+## Browser Compatibility
 
-Any Chromium-based browser that supports **Manifest V3** extensions (Chrome, Edge, Brave, Opera, etc.).
-
-Firefox is not supported out of the box — it would need a separate `manifest.json` adjustment for Firefox’s extension format.
+| Browser | Supported |
+|---------|-----------|
+| Chrome 88+ | ✅ |
+| Edge 88+ | ✅ |
+| Brave | ✅ |
+| Opera (Chromium) | ✅ |
+| Firefox | ❌ Requires separate manifest adjustments |
 
 ---
 
 ## Disclaimer
 
-This tool is unofficial and not affiliated with SRM Institute of Science and Technology. Always verify GPA figures with official university records. Grade parsing depends on the portal’s table layout; if SRM changes the results page structure, the extension may need an update.
+This tool is **not affiliated with SRM Institute of Science and Technology**. Always verify your GPA with official university records. Grade parsing depends on the portal's table layout; if SRM updates the results page structure, the extension may need an update.
 
 ---
 
 ## Legal
 
+Copyright © 2026 **srmsgpa**. All rights reserved.
+
 - [Privacy Policy](extension/assets/legal/privacy-policy.html)
 - [Terms of Service](extension/assets/legal/terms-of-service.html)
-
-Copyright © 2026 **srmsgpa**. All rights reserved.
