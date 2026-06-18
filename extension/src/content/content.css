@@ -1,17 +1,17 @@
 /* extension/src/content/content.css */
 
 .sgpa-dashboard {
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid #e3e6f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 12px;
-  box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
-  padding: 24px;
-  margin-bottom: 24px;
-  font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  color: #333;
-  transition: all 0.3s ease;
+  padding: 16px 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   width: 100%;
   box-sizing: border-box;
 }
@@ -19,9 +19,8 @@
 .sgpa-dashboard-header {
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #e3e6f0;
-  padding-bottom: 16px;
-  margin-bottom: 20px;
+  margin-bottom: 0;
+  flex-shrink: 0;
 }
 
 .sgpa-dashboard-title-container {
@@ -31,71 +30,72 @@
 }
 
 .sgpa-dashboard-icon {
-  width: 20px;
-  height: 20px;
-  fill: #4e73df;
+  width: 22px;
+  height: 22px;
+  fill: #2563eb;
 }
 
 .sgpa-dashboard-title {
   font-size: 18px;
   font-weight: 700;
-  color: #4e73df;
+  color: #1e293b;
   margin: 0;
-  font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  letter-spacing: -0.01em;
 }
 
 .sgpa-dashboard-body {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  flex-grow: 1;
+  justify-content: space-between;
+  margin-left: 40px;
   gap: 20px;
 }
 
 .sgpa-dashboard-stats {
   display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  width: 100%;
+  gap: 32px;
+  width: auto;
 }
 
 .sgpa-stat-box {
-  background: #fff;
-  border: 1px solid #e3e6f0;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.08);
-  flex: 1 1 200px;
-  text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-sizing: border-box;
-}
-
-.sgpa-stat-box:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 0.5rem 2rem 0 rgba(58, 59, 69, 0.15);
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  box-shadow: none;
 }
 
 .sgpa-stat-label {
   font-size: 13px;
-  font-weight: 800;
+  font-weight: 700;
   text-transform: uppercase;
-  margin-bottom: 6px;
-  font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+.sgpa-stat-label::after {
+  content: ":";
 }
 
 .sgpa-stat-sgpa .sgpa-stat-label {
-  color: #1cc88a;
+  color: #059669;
 }
 
 .sgpa-stat-credits .sgpa-stat-label {
-  color: #4e73df;
+  color: #2563eb;
 }
 
 .sgpa-stat-value {
-  font-size: 36px;
+  font-size: 20px;
   font-weight: 800;
-  color: #5a5c69;
-  font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #0f172a;
+  line-height: 1;
 }
+
 /* Checkbox Column and Interaction */
 .sgpa-checkbox-container {
   text-align: center;
@@ -106,7 +106,7 @@
   width: 16px;
   height: 16px;
   cursor: pointer;
-  accent-color: #007bff;
+  accent-color: #2563eb;
 }
 
 /* Excluded Row Styling */
@@ -126,11 +126,8 @@
 }
 
 .sgpa-copyright {
-  margin-top: 16px;
-  padding-top: 12px;
-  border-top: 1px solid #e3e6f0;
-  font-size: 11px;
-  color: #9ca3af;
-  text-align: center;
-  font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #94a3b8;
+  margin: 0;
 }
