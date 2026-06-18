@@ -1,0 +1,136 @@
+/* extension/src/content/content.css */
+
+.sgpa-dashboard {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid #e3e6f0;
+  border-radius: 12px;
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+  padding: 24px;
+  margin-bottom: 24px;
+  font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #333;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sgpa-dashboard-header {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e3e6f0;
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+}
+
+.sgpa-dashboard-title-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sgpa-dashboard-icon {
+  width: 20px;
+  height: 20px;
+  fill: #4e73df;
+}
+
+.sgpa-dashboard-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #4e73df;
+  margin: 0;
+  font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.sgpa-dashboard-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sgpa-dashboard-stats {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.sgpa-stat-box {
+  background: #fff;
+  border: 1px solid #e3e6f0;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.08);
+  flex: 1 1 200px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+.sgpa-stat-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0.5rem 2rem 0 rgba(58, 59, 69, 0.15);
+}
+
+.sgpa-stat-label {
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.sgpa-stat-sgpa .sgpa-stat-label {
+  color: #1cc88a;
+}
+
+.sgpa-stat-credits .sgpa-stat-label {
+  color: #4e73df;
+}
+
+.sgpa-stat-value {
+  font-size: 36px;
+  font-weight: 800;
+  color: #5a5c69;
+  font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+/* Checkbox Column and Interaction */
+.sgpa-checkbox-container {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.sgpa-checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #007bff;
+}
+
+/* Excluded Row Styling */
+.sgpa-row-excluded {
+  opacity: 0.5;
+  background-color: #f8f9fa !important;
+  transition: opacity 0.3s ease, background-color 0.3s ease;
+}
+
+.sgpa-row-excluded td {
+  text-decoration: line-through;
+  color: #6c757d;
+}
+
+.sgpa-row-excluded td:first-child {
+  text-decoration: none;
+}
+
+.sgpa-copyright {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid #e3e6f0;
+  font-size: 11px;
+  color: #9ca3af;
+  text-align: center;
+  font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
