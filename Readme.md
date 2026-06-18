@@ -15,6 +15,10 @@ Instantly see your SGPA on the SRM provisional results page — no copy-pasting,
 
 [Install](#install) · [How It Works](#how-it-works) · [Run Locally](#run-locally) · [Project Structure](#project-structure)
 
+<br/>
+
+![srmsgpa demo](scgpa-ex.jpeg)
+
 </div>
 
 ---
