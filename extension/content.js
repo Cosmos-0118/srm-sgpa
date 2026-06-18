@@ -6,6 +6,9 @@
   };
 
   let dashboardElement = null;
+  let observer = null;
+  let initTimeout = null;
+  let extensionEnabled = true;
 
   function isProvisionalPage() {
     const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6, .card-header, .card-title');
@@ -22,10 +25,10 @@
     const tables = document.querySelectorAll('table');
     for (let table of tables) {
       if (table.rows.length < 3) continue;
-      
+
       let hasGrade = false;
       let hasCredit = false;
-      
+
       const checkLimit = Math.min(table.rows.length, 3);
       for (let i = 0; i < checkLimit; i++) {
         const rowText = table.rows[i].innerText.toUpperCase();
@@ -35,7 +38,7 @@
           break;
         }
       }
-      
+
       if (hasGrade && hasCredit) return table;
     }
     return null;
@@ -47,7 +50,7 @@
       const parent = current.parentNode;
       const classList = parent.className || '';
       if (typeof classList === 'string' && (classList.includes('row') || classList.includes('card-body') || classList.includes('container'))) {
-         return current; 
+         return current;
       }
       let elementChildren = 0;
       for (let i = 0; i < parent.childNodes.length; i++) {
@@ -87,7 +90,7 @@
     if (!dashboardElement || !document.body.contains(dashboardElement)) {
       dashboardElement = document.createElement('div');
       dashboardElement.className = 'card card-icon border-custom lift lift-sm mb-4 mt-1 sgpa-dashboard-container';
-      
+
       dashboardElement.style.border = '1px solid #e3e6f0';
       dashboardElement.style.borderRadius = '8px';
       dashboardElement.style.boxShadow = '0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15)';
@@ -95,7 +98,7 @@
       dashboardElement.style.marginBottom = '20px';
       dashboardElement.style.overflow = 'hidden';
       dashboardElement.style.width = '100%';
-      
+
       const mountPoint = getStableMountPoint(targetTable);
       if (mountPoint && mountPoint.parentNode) {
          mountPoint.parentNode.insertBefore(dashboardElement, mountPoint);
@@ -114,7 +117,7 @@
 
     dashboardElement.innerHTML = `
       <div style="background-color: #007bff; color: white; padding: 12px 20px; font-weight: bold; display: flex; align-items: center; font-family: sans-serif; font-size: 16px;">
-        <svg style="width:18px; height:18px; margin-right:10px; fill:currentColor;" viewBox="0 0 512 512"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"></path></svg> 
+        <svg style="width:18px; height:18px; margin-right:10px; fill:currentColor;" viewBox="0 0 512 512"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"></path></svg>
         SGPA / CGPA Calculator
       </div>
       <div style="padding: 20px;">
@@ -138,6 +141,7 @@
             ${semesterBreakdownHtml}
           </div>
         ` : ''}
+        <p class="sgpa-copyright">&copy; 2026 srmcgpa</p>
       </div>
     `;
   }
@@ -146,17 +150,17 @@
     let overallTotalCredits = 0;
     let overallTotalPoints = 0;
 
-    const semestersMap = {}; 
+    const semestersMap = {};
     let lastSeenSemesterTitle = 'Unknown Semester';
     const semesterTitles = [];
 
     const rows = table.querySelectorAll('tr');
     rows.forEach(row => {
       const rowText = row.innerText.trim();
-      const isHeaderRow = (row.cells.length === 1 && row.cells[0].colSpan > 3) || 
-                          rowText.match(/^[a-z]{3}\s*-\s*\d{4}$/i) || 
+      const isHeaderRow = (row.cells.length === 1 && row.cells[0].colSpan > 3) ||
+                          rowText.match(/^[a-z]{3}\s*-\s*\d{4}$/i) ||
                           rowText.match(/^semester\s*\d+/i);
-      
+
       if (isHeaderRow) {
         if (rowText.length > 0 && rowText.length < 50) {
           lastSeenSemesterTitle = rowText;
@@ -167,25 +171,25 @@
         }
       } else {
         const checkbox = row.querySelector('.sgpa-checkbox');
-        if (!checkbox) return; 
+        if (!checkbox) return;
 
         if (checkbox.checked) {
           row.style.opacity = '1';
           const cells = row.querySelectorAll('td, th');
-          
+
           const { grade, credit } = extractGradeAndCredit(cells);
 
           if (grade !== null && credit !== null) {
             const gradePoint = gradePoints[grade];
-            
+
             if (!semestersMap[lastSeenSemesterTitle]) {
               semestersMap[lastSeenSemesterTitle] = { credits: 0, points: 0 };
               semesterTitles.push(lastSeenSemesterTitle);
             }
-            
+
             semestersMap[lastSeenSemesterTitle].credits += credit;
             semestersMap[lastSeenSemesterTitle].points += (credit * gradePoint);
-            
+
             overallTotalCredits += credit;
             overallTotalPoints += (credit * gradePoint);
           }
@@ -213,7 +217,7 @@
     const rows = table.querySelectorAll('tr');
     let headerHandled = false;
 
-    rows.forEach((row, index) => {
+    rows.forEach((row) => {
       const cells = row.querySelectorAll('td, th');
       if (cells.length === 0) return;
 
@@ -224,19 +228,21 @@
         th.innerText = 'Include';
         th.style.padding = '8px';
         th.style.textAlign = 'center';
+        th.className = 'sgpa-include-header';
         row.insertBefore(th, row.cells[0]);
         headerHandled = true;
         return;
       }
 
-      const isHeaderRow = (row.cells.length === 1 && row.cells[0].colSpan > 3) || 
-                          row.innerText.trim().match(/^[a-z]{3}\s*-\s*\d{4}$/i) || 
+      const isHeaderRow = (row.cells.length === 1 && row.cells[0].colSpan > 3) ||
+                          row.innerText.trim().match(/^[a-z]{3}\s*-\s*\d{4}$/i) ||
                           row.innerText.trim().match(/^semester\s*\d+/i);
-      
+
       if (isHeaderRow) {
          if (row.cells.length === 1) {
             const currentColspan = parseInt(row.cells[0].getAttribute('colspan') || '9');
             row.cells[0].setAttribute('colspan', (currentColspan + 1).toString());
+            row.cells[0].dataset.sgpaColspanAdjusted = 'true';
          }
          return;
       }
@@ -248,11 +254,12 @@
           td.className = 'sgpa-checkbox-container';
           td.style.textAlign = 'center';
           td.style.verticalAlign = 'middle';
-          
+
           td.innerHTML = `<input type="checkbox" class="sgpa-checkbox" style="width:16px; height:16px; cursor:pointer;" checked>`;
-          
+
           row.insertBefore(td, row.cells[0]);
-          
+          row.style.opacity = '1';
+
           const checkbox = td.querySelector('.sgpa-checkbox');
           checkbox.addEventListener('change', () => recalculateAndRender(table));
 
@@ -264,35 +271,94 @@
     table.dataset.sgpaInitialized = 'true';
   }
 
-  const observer = new MutationObserver((mutations) => {
-    let shouldRun = false;
-    for (const mutation of mutations) {
-      if (mutation.addedNodes.length) {
-         shouldRun = true;
-         break;
-      }
+  function cleanupExtension() {
+    if (dashboardElement && dashboardElement.parentNode) {
+      dashboardElement.parentNode.removeChild(dashboardElement);
     }
+    dashboardElement = null;
 
-    if (shouldRun) {
-      if (!isProvisionalPage()) return;
-      const table = findResultsTable();
-      if (table && !table.dataset.sgpaCalculated) {
-        initializeCheckboxes(table);
-        recalculateAndRender(table);
-        table.dataset.sgpaCalculated = 'true';
+    document.querySelectorAll('.sgpa-checkbox-container').forEach(el => el.remove());
+    document.querySelectorAll('.sgpa-include-header').forEach(el => el.remove());
+
+    document.querySelectorAll('tr').forEach(row => {
+      if (row.dataset.sgpaCheckboxAdded) {
+        delete row.dataset.sgpaCheckboxAdded;
+        row.style.opacity = '';
       }
-    }
-  });
+      if (row.cells.length === 1 && row.cells[0].dataset.sgpaColspanAdjusted === 'true') {
+        const currentColspan = parseInt(row.cells[0].getAttribute('colspan') || '1');
+        row.cells[0].setAttribute('colspan', Math.max(1, currentColspan - 1).toString());
+        delete row.cells[0].dataset.sgpaColspanAdjusted;
+      }
+    });
 
-  observer.observe(document.body, { childList: true, subtree: true });
+    document.querySelectorAll('table').forEach(table => {
+      delete table.dataset.sgpaInitialized;
+      delete table.dataset.sgpaCalculated;
+    });
+  }
 
-  setTimeout(() => {
-    if (!isProvisionalPage()) return;
+  function tryActivate() {
+    if (!extensionEnabled || !isProvisionalPage()) return;
+
     const table = findResultsTable();
     if (table && !table.dataset.sgpaCalculated) {
       initializeCheckboxes(table);
       recalculateAndRender(table);
       table.dataset.sgpaCalculated = 'true';
     }
-  }, 1000);
+  }
+
+  function startObserver() {
+    if (observer) return;
+
+    observer = new MutationObserver((mutations) => {
+      if (!extensionEnabled) return;
+
+      let shouldRun = false;
+      for (const mutation of mutations) {
+        if (mutation.addedNodes.length) {
+           shouldRun = true;
+           break;
+        }
+      }
+
+      if (shouldRun) {
+        tryActivate();
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+
+  function scheduleInit() {
+    if (initTimeout) clearTimeout(initTimeout);
+    initTimeout = setTimeout(() => {
+      initTimeout = null;
+      tryActivate();
+    }, 1000);
+  }
+
+  function setExtensionEnabled(enabled) {
+    extensionEnabled = enabled;
+    if (enabled) {
+      startObserver();
+      scheduleInit();
+    } else {
+      cleanupExtension();
+    }
+  }
+
+  chrome.storage.local.get({ enabled: true }, (result) => {
+    setExtensionEnabled(result.enabled);
+  });
+
+  chrome.storage.onChanged.addListener((changes, area) => {
+    if (area === 'local' && changes.enabled) {
+      setExtensionEnabled(changes.enabled.newValue);
+    }
+  });
+
+  startObserver();
+  scheduleInit();
 })();

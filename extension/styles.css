@@ -132,3 +132,13 @@
 .sgpa-row-excluded td:first-child {
   text-decoration: none;
 }
+
+.sgpa-copyright {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid #e3e6f0;
+  font-size: 11px;
+  color: #9ca3af;
+  text-align: center;
+  font-family: sans-serif;
+}

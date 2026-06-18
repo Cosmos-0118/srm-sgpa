@@ -1,0 +1,102 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: #1f2937;
+  background: #f3f4f6;
+  line-height: 1.6;
+}
+
+.legal-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 24px 48px;
+  background: #ffffff;
+  min-height: 100vh;
+}
+
+.legal-header {
+  text-align: center;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.legal-logo {
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
+  margin-bottom: 16px;
+}
+
+.legal-header h1 {
+  font-size: 28px;
+  color: #111827;
+}
+
+.legal-meta {
+  font-size: 14px;
+  color: #6b7280;
+  margin-top: 6px;
+}
+
+section {
+  margin-bottom: 28px;
+}
+
+section h2 {
+  font-size: 18px;
+  color: #3b5bdb;
+  margin-bottom: 10px;
+}
+
+section p {
+  font-size: 15px;
+  color: #374151;
+  margin-bottom: 10px;
+}
+
+section ul {
+  margin: 8px 0 10px 20px;
+  color: #374151;
+  font-size: 15px;
+}
+
+section li {
+  margin-bottom: 6px;
+}
+
+code {
+  background: #f3f4f6;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.legal-footer {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+  text-align: center;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.legal-footer a {
+  display: inline-block;
+  margin-top: 8px;
+  color: #3b5bdb;
+  text-decoration: none;
+}
+
+.legal-footer a:hover {
+  text-decoration: underline;
+}
+
+.legal-footer strong {
+  color: #374151;
+}
