@@ -9,7 +9,7 @@
 [![Manifest V3](https://img.shields.io/badge/Manifest-V3-4f46e5?style=flat-square)](https://developer.chrome.com/docs/extensions/mv3/)
 [![Version](https://img.shields.io/badge/version-1.1-059669?style=flat-square)](#)
 [![License](https://img.shields.io/badge/license-All%20Rights%20Reserved-gray?style=flat-square)](#legal)
-[![Chrome Web Store](https://img.shields.io/badge/Chrome%20Web%20Store-coming%20soon-f59e0b?style=flat-square)](https://chromewebstore.google.com/detail/srm-sgpa-calculator/nbaajhmclhddihjcnkihjbolbkdcfijj)
+[![Chrome Web Store](https://img.shields.io/badge/Chrome%20Web%20Store-Install%20now-f59e0b?style=flat-square)](https://chromewebstore.google.com/detail/srm-sgpa-calculator/nbaajhmclhddihjcnkihjbolbkdcfijj)
 
 Instantly see your SGPA on the SRM provisional results page — no copy-pasting, no spreadsheets.
 
